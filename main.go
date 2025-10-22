@@ -7,21 +7,32 @@ import (
 	"io"
 	"net/http"
 	"os"
-	"strings"
 
 	"github.com/robfig/cron/v3"
-	"github.com/typical-developers/discord-webhooks-go/webhooks"
 )
 
 type Watch struct {
 	CountryCode string `json:"CountryCode"`
 }
 
+type NotificationTarget struct {
+	// discord, gotify, curl
+	Type string `json:"type"`
+
+	// discord options
+	DiscordURL string `json:"discordUrl"`
+
+	// gotify options
+	GotifyURL   string `json:"gotifyUrl"`
+	GotifyToken string `json:"gotifyToken"`
+	GotifyAppID uint   `json:"gotifyAppID"`
+}
+
 type Config struct {
-	Watches     map[string]Watch `json:"watches"`
-	WebhookURL  string           `json:"webhookURL"`
-	APIKey      string           `json:"apiKey"`
-	CheckOnBoot bool             `json:"checkOnBoot"`
+	Watches     map[string]Watch     `json:"watches"`
+	Targets     []NotificationTarget `json:"targets"`
+	APIKey      string               `json:"apiKey"`
+	CheckOnBoot bool                 `json:"checkOnBoot"`
 }
 
 var config Config
@@ -29,50 +40,6 @@ var config Config
 var dataPath string
 
 var listPath string = ""
-
-func isNotified(id string) bool {
-	fileData, _ := os.ReadFile(listPath)
-
-	return strings.Contains(string(fileData), id)
-}
-
-func notify(id string) {
-	fileData, _ := os.ReadFile(listPath)
-	os.WriteFile(listPath, []byte(string(fileData)+"\n"+id), 0755)
-}
-
-func notifyUser(event Event) {
-	webhook := webhooks.NewWebhookClientFromURL(config.WebhookURL)
-
-	payload := webhooks.WebhookPayload{}
-
-	embed := payload.AddEmbed()
-
-	var mainAttraction Attraction
-
-	for _, a := range event.Embedded.Attractions {
-		if _, exists := config.Watches[a.ID]; exists {
-			mainAttraction = a
-			break
-		}
-	}
-
-	embed.SetTitle("There is a new `" + mainAttraction.Name + "` event!")
-	embed.SetDescription("It will be at `" + event.Embedded.Venues[0].Name + "` in " + event.Embedded.Venues[0].City.Name)
-
-	pricefield := embed.AddField()
-
-	pricefield.SetName("Price/PP")
-	pricefield.SetValue("money")
-	pricefield.SetInline(true)
-
-	embed.SetURL(event.URL)
-	embed.SetImage(event.Embedded.Attractions[0].Images[len(event.Embedded.Attractions[0].Images)-1].URL)
-
-	webhook.SendMessage(&payload)
-
-	notify(event.ID)
-}
 
 func checkWatches() {
 	fmt.Println("Checking watches")
@@ -119,8 +86,13 @@ func loadConfig(path string) error {
 
 	if os.IsNotExist(err) {
 		defaultValue := Config{
-			Watches:     map[string]Watch{},
-			WebhookURL:  "discord webhook url here",
+			Watches: map[string]Watch{},
+			Targets: []NotificationTarget{
+				{
+					Type:       "discord",
+					DiscordURL: "put your webhook url here",
+				},
+			},
 			APIKey:      "ticketmaster api key here",
 			CheckOnBoot: true,
 		}
