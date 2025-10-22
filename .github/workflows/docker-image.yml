@@ -1,4 +1,4 @@
-name: build and push image to gchr
+name: build and push image to ghcr
 
 permissions:
   contents: read
@@ -10,9 +10,27 @@ on:
       - main
 
 jobs:
-  build:
+  check_changes:
     runs-on: ubuntu-latest
+    outputs:
+      relevant: ${{ steps.filter.outputs.relevant }}
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v3
 
+      - name: Check if relevant files changed
+        id: filter
+        uses: dorny/paths-filter@v3
+        with:
+          filters: |
+            relevant:
+              - 'Dockerfile'
+              - '*.go'
+
+  build:
+    needs: check_changes
+    if: ${{ needs.check_changes.outputs.relevant == 'true' }}
+    runs-on: ubuntu-latest
     steps:
       - name: Checkout code
         uses: actions/checkout@v3
