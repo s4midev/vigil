@@ -1,7 +1,10 @@
+<p align="center">
 ![Light Banner](assets/lightbanner.svg#gh-light-mode-only)
 ![Dark Banner](assets/darkbanner.svg#gh-dark-mode-only)
 
 A lightweight golang based concert notifier
+
+</p>
 
 ## Docker Compose Quick Start
 ```yaml
