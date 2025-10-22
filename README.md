@@ -1,4 +1,6 @@
-# vigil
+![Light Banner](assets/lightbanner.svg#gh-light-mode-only)
+![Dark Banner](assets/darkbanner.svg#gh-dark-mode-only)
+
 A lightweight golang based concert notifier
 
 ## Docker Compose Quick Start
@@ -15,3 +17,6 @@ services:
 
 ## To-Do
 - Custom CURL based notifications
+
+## Attributions
+- Icon originally from [GameIcons](https://github.com/game-icons/icons)
