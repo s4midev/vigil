@@ -14,4 +14,4 @@ services:
 ```
 
 ## To-Do
-- Other Notification Options
+- Custom CURL based notifications

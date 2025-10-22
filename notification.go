@@ -6,6 +6,7 @@ import (
 	"net/http"
 	"net/url"
 	"os"
+	"strconv"
 	"strings"
 
 	"github.com/gotify/go-api-client/auth"
@@ -102,14 +103,12 @@ func notifyUser(event Event) {
 		switch t.Type {
 		case "discord":
 			discordNotify(event, t)
-			break
 
 		case "gotify":
 			gotifyNotify(event, t)
-			break
 
 		default:
-			fmt.Println("Target " + string(i) + "has an invalid type!")
+			fmt.Println("Target " + strconv.Itoa(i) + "has an invalid type!")
 		}
 	}
 }

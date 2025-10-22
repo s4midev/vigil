@@ -92,6 +92,13 @@ func loadConfig(path string) error {
 					Type:       "discord",
 					DiscordURL: "put your webhook url here",
 				},
+				{
+					Type:        "gotify",
+					GotifyURL:   "https://gotify.awesomeperson.com",
+					GotifyToken: "gotify token",
+					// index of your gotify app, btw
+					GotifyAppID: 0,
+				},
 			},
 			APIKey:      "ticketmaster api key here",
 			CheckOnBoot: true,
