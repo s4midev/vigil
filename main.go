@@ -143,6 +143,14 @@ func loadConfig(path string) error {
 	return nil
 }
 
+func verifyListExists(path string) {
+	_, err := os.Stat(path)
+
+	if os.IsNotExist(err) {
+		os.WriteFile(path, []byte(""), 0755)
+	}
+}
+
 func main() {
 	dataPath = os.Getenv("VIGIL_DATAPATH")
 
@@ -167,6 +175,7 @@ func main() {
 
 	listPath = dataPath + "/notifiedList"
 
+	verifyListExists(listPath)
 	fmt.Println("Successfully booted and loaded config :3")
 
 	c := cron.New(cron.WithSeconds())
