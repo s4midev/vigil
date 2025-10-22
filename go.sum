@@ -1,0 +1,6 @@
+github.com/opensaucerer/goaxios v0.0.6 h1:bPoICZDeBldoxsZ6oMec9bEFXSardLsxXoCfJG0n7Gw=
+github.com/opensaucerer/goaxios v0.0.6/go.mod h1:DukGCZOw7/YhPF6JaDtjVTOaNq6wGA4LQMZnYNAwlNM=
+github.com/robfig/cron/v3 v3.0.1 h1:WdRxkvbJztn8LMz/QEvLN5sBU+xKpSqwwUO1Pjr4qDs=
+github.com/robfig/cron/v3 v3.0.1/go.mod h1:eQICP3HwyT7UooqI/z+Ov+PtYAWygg1TEWWzGIFLtro=
+github.com/typical-developers/discord-webhooks-go v1.0.3 h1:SfOodL+V+Dvm7VHDJAqmzRD0bD10AlXhJf03xqZoMu8=
+github.com/typical-developers/discord-webhooks-go v1.0.3/go.mod h1:eSX0nKrCs/Xnn1O5vTSQfHOXnVoS8fcXQa6n0AnCbj4=
