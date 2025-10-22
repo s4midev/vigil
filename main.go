@@ -18,9 +18,10 @@ type Watch struct {
 }
 
 type Config struct {
-	Watches    map[string]Watch `json:"watches"`
-	WebhookURL string           `json:"webhookURL"`
-	APIKey     string           `json:"apiKey"`
+	Watches     map[string]Watch `json:"watches"`
+	WebhookURL  string           `json:"webhookURL"`
+	APIKey      string           `json:"apiKey"`
+	CheckOnBoot bool             `json:"checkOnBoot"`
 }
 
 var config Config
@@ -118,9 +119,10 @@ func loadConfig(path string) error {
 
 	if os.IsNotExist(err) {
 		defaultValue := Config{
-			Watches:    map[string]Watch{},
-			WebhookURL: "discord webhook url here",
-			APIKey:     "ticketmaster api key here",
+			Watches:     map[string]Watch{},
+			WebhookURL:  "discord webhook url here",
+			APIKey:      "ticketmaster api key here",
+			CheckOnBoot: true,
 		}
 
 		marshal, _ := json.Marshal(defaultValue)
@@ -181,6 +183,10 @@ func main() {
 	c := cron.New(cron.WithSeconds())
 	c.AddFunc("0 0,30 * * * *", checkWatches)
 	c.Start()
+
+	if config.CheckOnBoot {
+		checkWatches()
+	}
 
 	select {}
 }
