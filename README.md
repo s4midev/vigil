@@ -1,6 +1,6 @@
 <p align="center">
-  <img src="assets/lightbanner.svg" alt="Light Banner" width="600" style="display:block;" class="gh-light-mode-only">
-  <img src="assets/darkbanner.svg" alt="Dark Banner" width="600" style="display:block;" class="gh-dark-mode-only">
+  <img src="assets/lightbanner.svg#gh-light-mode-only" alt="Light Banner" width="600" style="display:block;">
+  <img src="assets/darkbanner.svg#gh-dark-mode-only" alt="Dark Banner" width="600" style="display:block;">
   <br>
   A lightweight golang based concert notifier
 </p>
