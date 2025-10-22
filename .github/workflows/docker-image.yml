@@ -1,5 +1,8 @@
 name: build and push image to gchr
 
+permissions:
+  contents: read
+  packages: write
 
 on:
   push:
